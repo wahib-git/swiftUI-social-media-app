@@ -12,6 +12,9 @@
 		8AB738BA2EBA2F9600C6C47C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8AB738B92EBA2F9600C6C47C /* FirebaseAnalytics */; };
 		8AB738BC2EBA2F9600C6C47C /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8AB738BB2EBA2F9600C6C47C /* FirebaseAnalyticsCore */; };
 		8AB738BE2EBA2F9600C6C47C /* FirebaseAnalyticsIdentitySupport in Frameworks */ = {isa = PBXBuildFile; productRef = 8AB738BD2EBA2F9600C6C47C /* FirebaseAnalyticsIdentitySupport */; };
+		8AD2F0522EBB6227008DEE8C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 8AD2F0512EBB6227008DEE8C /* FirebaseAuth */; };
+		8AD2F0542EBB624E008DEE8C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 8AD2F0532EBB624E008DEE8C /* FirebaseFirestore */; };
+		8AD2F0582EBB6B4D008DEE8C /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8AD2F0572EBB6B4D008DEE8C /* FirebaseCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,10 +35,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8AB738B82EBA2F9600C6C47C /* FirebaseAILogic in Frameworks */,
+				8AD2F0522EBB6227008DEE8C /* FirebaseAuth in Frameworks */,
 				8AB738BE2EBA2F9600C6C47C /* FirebaseAnalyticsIdentitySupport in Frameworks */,
 				8AB738B62EBA2F9600C6C47C /* FirebaseAI in Frameworks */,
 				8AB738BA2EBA2F9600C6C47C /* FirebaseAnalytics in Frameworks */,
 				8AB738BC2EBA2F9600C6C47C /* FirebaseAnalyticsCore in Frameworks */,
+				8AD2F0582EBB6B4D008DEE8C /* FirebaseCore in Frameworks */,
+				8AD2F0542EBB624E008DEE8C /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				8AB738A32EBA25CD00C6C47C /* social-media-app */,
+				8AD2F0502EBB6227008DEE8C /* Frameworks */,
 				8AB738A22EBA25CD00C6C47C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +63,13 @@
 				8AB738A12EBA25CD00C6C47C /* social-media-app.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8AD2F0502EBB6227008DEE8C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +97,9 @@
 				8AB738B92EBA2F9600C6C47C /* FirebaseAnalytics */,
 				8AB738BB2EBA2F9600C6C47C /* FirebaseAnalyticsCore */,
 				8AB738BD2EBA2F9600C6C47C /* FirebaseAnalyticsIdentitySupport */,
+				8AD2F0512EBB6227008DEE8C /* FirebaseAuth */,
+				8AD2F0532EBB624E008DEE8C /* FirebaseFirestore */,
+				8AD2F0572EBB6B4D008DEE8C /* FirebaseCore */,
 			);
 			productName = "social-media-app";
 			productReference = 8AB738A12EBA25CD00C6C47C /* social-media-app.app */;
@@ -380,6 +397,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8AB738B42EBA2F9600C6C47C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsIdentitySupport;
+		};
+		8AD2F0512EBB6227008DEE8C /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8AB738B42EBA2F9600C6C47C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		8AD2F0532EBB624E008DEE8C /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8AB738B42EBA2F9600C6C47C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		8AD2F0572EBB6B4D008DEE8C /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8AB738B42EBA2F9600C6C47C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
