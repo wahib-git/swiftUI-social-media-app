@@ -16,32 +16,31 @@ final class ParticipantEventsViewModel: ObservableObject {
     private let service = EventService()
 
     func load() async {
-      loading = true; defer { loading = false }
-      do {
-        events = try await service.listEvents(onlyOpen: true)
-      } catch {
-        self.error = error.localizedDescription
-      }
+        loading = true; defer { loading = false }
+        do {
+            events = try await service.listEvents(onlyOpen: false)
+        } catch {
+            self.error = error.localizedDescription
+        }
     }
-
 
     func register(uid: String, eventId: String) async {
-      loading = true; defer { loading = false }
-      do {
-        try await service.register(userId: uid, eventId: eventId)
-        await load()
-      } catch {
-        self.error = error.localizedDescription
-      }
+        loading = true; defer { loading = false }
+        do {
+            try await service.register(userId: uid, eventId: eventId)
+            await load()
+        } catch {
+            self.error = error.localizedDescription
+        }
     }
-
 
     func unregister(uid: String, eventId: String) async {
         loading = true; defer { loading = false }
         do {
-          try await service.unregister(userId: uid, eventId: eventId)
-          await load()
+            try await service.unregister(userId: uid, eventId: eventId)
+            await load()
         } catch {
-            self.error = error.localizedDescription }
+            self.error = error.localizedDescription
+        }
     }
 }

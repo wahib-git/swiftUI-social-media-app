@@ -16,32 +16,31 @@ final class AdminEventsViewModel: ObservableObject {
     private let service = EventService()
 
     func load() async {
-      loading = true; defer { loading = false }
-      do {
-        events = try await service.listEvents(onlyOpen: false)
-      } catch {
-        self.error = error.localizedDescription
-      }
+        loading = true; defer { loading = false }
+        do {
+            events = try await service.listEvents(onlyOpen: false)
+        } catch {
+            self.error = error.localizedDescription
+        }
     }
 
     func create(event: Event) async {
-      loading = true; defer { loading = false }
-      do {
-        try await service.createEvent(event)
-        await load()
-      } catch {
-        self.error = error.localizedDescription
-      }
+        loading = true; defer { loading = false }
+        do {
+            try await service.createEvent(event)
+            await load()
+        } catch {
+            self.error = error.localizedDescription
+        }
     }
 
     func delete(id: String) async {
-      loading = true; defer { loading = false }
-      do {
-        try await service.deleteEvent(id: id)
-        await load()
-      } catch {
-        self.error = error.localizedDescription
-      }
+        loading = true; defer { loading = false }
+        do {
+            try await service.deleteEvent(id: id)
+            await load()
+        } catch {
+            self.error = error.localizedDescription
+        }
     }
-
 }

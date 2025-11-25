@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 
 struct ParticipantHomeView: View {
     @EnvironmentObject var session: SessionViewModel
@@ -13,68 +14,81 @@ struct ParticipantHomeView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(vm.events) { e in
-                    NavigationLink(destination: ParticipantEventDetailView(event: e)) {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(e.name).font(.headline)
-                                Text(e.location).font(.subheadline).foregroundStyle(.secondary)
-                            }
-                            Spacer()
-                            Text("\(e.participantsCount)/\(e.maxParticipants)")
-                                .monospacedDigit().foregroundStyle(.secondary)
+            ZStack {
+                Color(.systemGray6).ignoresSafeArea() // fond doux sur toute la vue
+                VStack(spacing: 18) {
+                    HStack {
+                        Image(systemName: "person.3.fill")
+                            .font(.largeTitle)
+                            .foregroundColor(.blue)
+                        Spacer()
+                        Button(action: { session.signOut() }) {
+                            Label("Déconnexion", systemImage: "arrowshape.turn.up.left")
+                                .labelStyle(.iconOnly)
+                                .foregroundColor(.red)
                         }
-                        .padding(.vertical, 4)
-                        .transition(.move(edge: .trailing))
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 8)
+                    
+                    Text("Événements à venir")
+                        .font(.title).bold()
+                        .foregroundColor(.accentColor)
+                        .padding(.bottom, 6)
+
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            ForEach(vm.events) { e in
+                                NavigationLink(destination: ParticipantEventDetailView(event: e)) {
+                                    EventCard(event: e)
+                                        .padding(.horizontal, 4)
+                                }
+                                .buttonStyle(.plain)
+                                .transition(.opacity.combined(with: .move(edge: .bottom)))
+                            }
+                        }
+                        .padding(.bottom, 12)
                     }
                 }
             }
-            .navigationTitle("Événements")
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) { Button("Déconnexion") { session.signOut() } }
-            }
             .task { await vm.load() }
+            .navigationTitle("")
+            .navigationBarHidden(true) // On remplace la barre par le header stylé
         }
     }
 }
 
-struct ParticipantEventDetailView: View {
+// Carte stylée pour chaque événement
+struct EventCard: View {
     let event: Event
-    @StateObject private var vm = ParticipantEventsViewModel()
-
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(event.name).font(.title2).bold()
+        VStack(alignment: .leading, spacing: 8) {
+            Text(event.name)
+                .font(.headline)
+                .foregroundColor(.blue)
+                .padding(.bottom, 2)
             Text(event.description)
-            Text("Lieu: \(event.location)")
-            Text("Places: \(event.participantsCount)/\(event.maxParticipants)")
-
+                .font(.subheadline)
+                .foregroundColor(.gray)
+                .lineLimit(2)
+                .padding(.bottom, 4)
             HStack {
-                Button("S’inscrire") {
-                    Task {
-                        if let uid = Auth.auth().currentUser?.uid, let id = event.id {
-                            await vm.register(uid: uid, eventId: id)
-                        }
-                    }
-                }
-                .buttonStyle(.borderedProminent)
-                .disabled(event.status != "open" || event.participantsCount >= event.maxParticipants)
-
-                Button("Se désinscrire") {
-                    Task {
-                        if let uid = Auth.auth().currentUser?.uid, let id = event.id {
-                            await vm.unregister(uid: uid, eventId: id)
-                        }
-                    }
-                }
-                .buttonStyle(.bordered)
+                Label(event.location, systemImage: "mappin.and.ellipse")
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+                Spacer()
+                Label("\(event.participantsCount)/\(event.maxParticipants)", systemImage: "person.fill")
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
             }
-
-            if let err = vm.error { Text(err).foregroundStyle(.red) }
-            Spacer()
         }
         .padding()
-        .navigationTitle("Détail")
+        .background(.white)
+        .cornerRadius(14)
+        .shadow(color: Color.blue.opacity(0.08), radius: 5, y: 2)
+        .overlay(
+            RoundedRectangle(cornerRadius: 14)
+                .stroke(event.status == "open" ? Color.blue : Color.gray, lineWidth: 1)
+        )
     }
 }
